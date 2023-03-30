@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  FirstViewController.swift
 //  Ionex
 //
 //  Created by sandy.huang on 2023/3/30.
@@ -7,18 +7,22 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class FirstViewController: UIViewController {
     
     @IBOutlet weak var userNameTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     
-    let viewModel = ViewModel()
+    let viewModel = FistViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.setupButtonSatus(isEnable: false)
+        self.setupTextField()
+    }
+    
+    private func setupTextField() {
         self.userNameTextField.delegate = self
         self.passwordTextField.delegate = self
         self.passwordTextField.isSecureTextEntry = true
@@ -29,13 +33,12 @@ class ViewController: UIViewController {
             self.viewModel.loginAction(parameters: ["username": userName, "password": password]) { data in
                 print("登入成功 = \(data)")
                 DispatchQueue.main.async {
-                    let secondViewController = SecondViewController.instantiate()
+                    let secondViewController = SecondViewController.instantiate(userData: data)
                     self.navigationController?.pushViewController(secondViewController, animated: true)
                 }
             }
         }
     }
-    
     
     private func setupButtonSatus(isEnable: Bool) {
         self.loginButton.isEnabled = isEnable
@@ -47,8 +50,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: UITextFieldDelegate {
-
+extension FirstViewController: UITextFieldDelegate {
 
     func textFieldDidChangeSelection(_ textField: UITextField) {
         if let userName = self.userNameTextField.text, let password = self.passwordTextField.text {

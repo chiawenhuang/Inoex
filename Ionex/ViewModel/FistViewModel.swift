@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ViewModel: NSObject {
+class FistViewModel: NSObject {
     
     func loginAction(parameters: [String: Any], completion: @escaping ((LoginService.LoginData) -> Void)) {
         LoginService().loginRequest(parameters: parameters) { data in
