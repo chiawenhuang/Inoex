@@ -26,7 +26,6 @@ class LoginService {
             request.httpBody = data
             
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            
             request.setValue("1", forHTTPHeaderField: "X-Parse-Revocable-Session")
             request.setValue("", forHTTPHeaderField: "X-Parse-REST-API-Key")
             request.setValue("vqYuKPOkLQLYHhk4QTGsGKFwATT4mBIGREI2m8eD", forHTTPHeaderField: "X-Parse-Application-Id")
@@ -35,7 +34,7 @@ class LoginService {
                 if error != nil {
                     print (error.debugDescription)
                 } else {
-                    if let data = data, let responseData = try? JSONDecoder().decode(LoginData.self, from: data) {
+                    if let data = data, let responseData = try? JSONDecoder().decode(LoginData.self, from: data), responseData.sessionToken != nil {
                         completion(responseData)
                         print("responseData === \(responseData)")
                     }
